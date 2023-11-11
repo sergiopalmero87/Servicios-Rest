@@ -65,8 +65,8 @@ public class LibroControlador {
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Libro> altaLibro(@RequestBody Libro libro) {
 		System.out.println("altaLibro: objeto libro: " + libro);
-		Libro nuevoLibro = (Libro) libroService.altaLibro(libro);
-		return new ResponseEntity<Libro>(nuevoLibro,HttpStatus.CREATED);//201 CREATED
+		libroService.altaLibro(libro);
+		return new ResponseEntity<Libro>(libro, HttpStatus.CREATED);//201 CREATED
 	}
 	
 	//Modificar libro segun su id

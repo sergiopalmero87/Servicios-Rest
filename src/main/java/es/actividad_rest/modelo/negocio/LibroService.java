@@ -37,11 +37,6 @@ public class LibroService {
 	
 	//Create
 	public List<Libro> altaLibro(Libro l) {
-		for (Libro libro : listaLibros) {
-			if(libro.getId() == l.getId() || libro.getTitulo().equalsIgnoreCase(l.getTitulo())) {
-				return null;
-			}	
-		}
 		listaLibros.add(l);
 		return listaLibros;
 	}

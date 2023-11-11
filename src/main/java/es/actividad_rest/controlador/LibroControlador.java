@@ -41,7 +41,7 @@ public class LibroControlador {
 	@GetMapping(path="libros",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Libro>> obtenerTodosLosLibros(){
 		List<Libro> listaLibros;
-		System.out.println("Listando los libros");
+		System.out.println("Listando todos los libros");
 		listaLibros = libroService.obtenerTodosLosLibros();			
 		return new ResponseEntity<List<Libro>>(listaLibros,HttpStatus.OK);
 		}
@@ -49,8 +49,9 @@ public class LibroControlador {
 	//Borrar un libro segun su id.
 	@DeleteMapping(path="libros/{id}")
 	public ResponseEntity<Libro> eliminarLibroPorId(@PathVariable("id") int id) {
-		System.out.println("Libro a borrar por su id: " + id);
+		System.out.println("Id del libro a borrar: " + id);
 		Libro libro = libroService.eliminarLibroPorId(id);
+		System.out.println("Libro eliminado: " + libro);
 		if(libro != null) {
 			return new ResponseEntity<Libro>(libro,HttpStatus.OK);//200 OK
 		}else {
@@ -64,18 +65,18 @@ public class LibroControlador {
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Libro> altaLibro(@RequestBody Libro libro) {
 		System.out.println("altaLibro: objeto libro: " + libro);
-		libroService.altaLibro(libro);
-		return new ResponseEntity<Libro>(libro,HttpStatus.CREATED);//201 CREATED
+		Libro nuevoLibro = (Libro) libroService.altaLibro(libro);
+		return new ResponseEntity<Libro>(nuevoLibro,HttpStatus.CREATED);//201 CREATED
 	}
 	
 	//Modificar libro segun su id
 	@PutMapping(path="libros/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Libro> editarLibro(@PathVariable("id") int id, @RequestBody Libro libro) {
 		System.out.println("libro a modificar segun su id: " + id);
-		System.out.println("Datos a modificar: " + libro);
-		Libro libroActualizado = libroService.editarLibro(libro);
-		if(libroActualizado != null) {
-			return new ResponseEntity<Libro>(libroActualizado, HttpStatus.OK);//200 OK
+		System.out.println("datos modificados: " + libro);
+		Libro libroUpdate = libroService.editarLibro(libro);
+		if(libroUpdate != null) {
+			return new ResponseEntity<Libro>(libroUpdate, HttpStatus.OK);//200 OK
 		}else {
 			return new ResponseEntity<Libro>(HttpStatus.NOT_FOUND);//404 NOT FOUND
 		}

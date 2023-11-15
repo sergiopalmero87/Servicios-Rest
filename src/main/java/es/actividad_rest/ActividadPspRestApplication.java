@@ -1,5 +1,6 @@
 package es.actividad_rest;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ import es.actividad_rest.modelo.entidad.Libro;
 import es.actividad_rest.modelo.negocio.LibroService;
 
 @SpringBootApplication
-public class ActividadPspRestApplication { //implements CommandLineRunner {
+public class ActividadPspRestApplication implements CommandLineRunner { 
 	
-	
+	@Autowired
 	private LibroService libroService;
 	
 	@Autowired
@@ -32,12 +33,6 @@ public class ActividadPspRestApplication { //implements CommandLineRunner {
 		return builder.build();
 	}
 	
-	@Autowired
-	public ActividadPspRestApplication(LibroService libroService) {
-	    this.libroService = libroService;
-	}
-
-	
 
 	public static void main(String[] args) {
 		System.out.println("Cliente -> Cargando el contexto de Spring");
@@ -45,8 +40,20 @@ public class ActividadPspRestApplication { //implements CommandLineRunner {
 	}
 
 
-
-	/*public void menu() {
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("****** Arrancando el cliente REST ******");		
+		
+		logica();
+		
+		
+	}
+	
+	
+	
+	
+	//METODOS
+	public void menu() {
 		System.out.println("\n=== Menú ===");
         System.out.println("1. Dar de alta un libro");
         System.out.println("2. Eliminar un libro por ID");
@@ -54,74 +61,87 @@ public class ActividadPspRestApplication { //implements CommandLineRunner {
         System.out.println("4. Obtener un libro por ID");
         System.out.println("5. Listar todos los libros");
         System.out.println("6. Salir");
-	}*/
-
-
-
-	/*@Override
-	public void run(String... args) throws Exception {
-		Scanner scan = new Scanner(System.in);
-		int opcion = 0;
-		
+	}
+	
+	
+	public void logica() {
+		Scanner sc = new Scanner(System.in);
+		int opcion;
 		do {
 			menu();
-			System.out.print("Elige una opcion: \n");
-			opcion = scan.nextInt();
+			System.out.println("Elige una opcion entre 1 y 6:");
+			opcion = sc.nextInt();
 			
 			switch(opcion) {
 				case 1: 
-					System.out.println("Introduce los datos de la nueva pelicula:");
-					System.out.print("ID: ");
-					int id = scan.nextInt();
-					scan.nextLine();
-					System.out.print("TITULO: ");
-					String titulo = scan.nextLine();
-					System.out.print("EDITORIAL: ");
-					String editorial = scan.nextLine();
-					System.out.print("NOTA");
-					double nota = scan.nextDouble();
-					Libro libro = new Libro(id,titulo, editorial, nota);
+					System.out.println("ID: ");
+					int id = sc.nextInt();
+					sc.nextLine();
+					
+					System.out.println("TITULO: ");
+					String titulo = sc.nextLine();
+					
+					System.out.println("EDITORIAL: ");
+					String editorial = sc.nextLine();
+					
+					System.out.println("NOTA: ");
+					double nota = sc.nextDouble();
+					
+					Libro libro = new Libro(id, titulo, editorial, nota);
 					libroService.altaLibroRs(libro);
+					
+					System.out.println("Libro añadido");
 					break;
+					
 				case 2:
-					System.out.print("Introduce el ID del libro a eliminar: ");
-                    int idEliminar = scan.nextInt();
-                    libroService.eliminarLibroPorIdRs(idEliminar);
-                    break;
-				case 3:
-					System.out.println("Introduce los datos de la pelicula a editar:");
-					System.out.print("ID: ");
-                    int idEditar = scan.nextInt();
-                    scan.nextLine();  // Consumir el salto de línea pendiente
-                    System.out.print("TITULO: ");
-                    String nuevoTitulo = scan.nextLine();
-                    System.out.print("EDITORIAL: ");
-                    String nuevaEditorial = scan.nextLine();
-                    System.out.print("NOTA: ");
-                    double nuevaNota = scan.nextDouble();
-                    Libro libroEditado = new Libro(idEditar, nuevoTitulo, nuevaEditorial, nuevaNota);
-                    libroService.editarLibroRs(libroEditado);
-                    break;
-				case 4:
-					System.out.print("Introduce el ID del libro a consultar: ");
-                    int idConsultar = scan.nextInt();
-                    libroService.obtenerLibroPorIdRs(idConsultar);
-                    break;
-				case 5:
-					System.out.println("La lista de libros es: ");
-					libroService.obtenerTodosLosLibrosRs();
+					System.out.println("ID del libro a eliminar: ");
+					int idEliminar = sc.nextInt();
+					libroService.eliminarLibroPorIdRs(idEliminar); 
 					break;
+					
+				case 3:
+					System.out.println("ID: ");
+					int idNuevo = sc.nextInt();
+					sc.nextLine();
+					
+					System.out.println("TITULO: ");
+					String tituloNuevo = sc.nextLine();
+					
+					System.out.println("EDITORIAL: ");
+					String editorialNueva = sc.nextLine();
+					
+					System.out.println("NOTA: ");
+					double notaNueva = sc.nextDouble();
+					
+					Libro libroNuevo = new Libro(idNuevo, tituloNuevo, editorialNueva, notaNueva);
+					libroService.editarLibroRs(libroNuevo);
+					break;
+					
+				case 4:
+					System.out.println("ID del libro a obtener: ");
+					int idObtener = sc.nextInt();
+					Libro l = libroService.obtenerLibroPorIdRs(idObtener); 
+					System.out.println(l);
+					break;
+					
+				case 5:
+					List<Libro> listaLibros;
+					listaLibros = libroService.obtenerTodosLosLibrosRs();
+					System.out.println(listaLibros);
+					break;
+					
 				case 6:
-					System.out.println("Saliendo de la aplicacion!");
+					System.out.println("Saliendo de la aplicacion...");
 					pararAplicacion();
 					break;
+					
 				default:
-					System.out.println("Opcion no valida. Intentelo de nuevo.");
-				
+					System.out.println("Opción incorrecta. Elija una opción válida");
+					break;
+					
 			}
-		
-		}while(opcion != 6);
-		
+				
+		}while (opcion != 6);
 		
 	}
 	
@@ -148,7 +168,7 @@ public class ActividadPspRestApplication { //implements CommandLineRunner {
 			}
 		});*/
 	
-	
+	}
 		
 }
 

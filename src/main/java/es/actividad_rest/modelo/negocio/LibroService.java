@@ -23,11 +23,11 @@ public class LibroService {
 	//La URL base del servicio REST de libros
 	public static final String URL = "http://localhost:8080/libros";
 	
-	/*@Autowired
-	RestTemplate restTemplate;*/
+	@Autowired
+	RestTemplate restTemplate;
 
 	public LibroService() {
-		System.out.println("LibroService -> Creando la lista de libros!");
+		System.out.println("\nLibroService -> Creando la lista de libros...");
 		listaLibros = new ArrayList<Libro>();
 		Libro l1 = new Libro(0, "Libro 0", "Editorial 0", 10.0);
 		Libro l2 = new Libro(1, "Libro 1", "Editorial 1", 12.0);
@@ -39,8 +39,7 @@ public class LibroService {
 		listaLibros.add(l3);
 		listaLibros.add(l4);
 		listaLibros.add(l5);
-		System.out.println("\n-----------------------------------------\n");
-		System.out.println("LibroService -> Creada lista de libros!");
+		System.out.println("LibroService -> ¡Creada lista de libros!\n");
 	}
 	
 	//Metodos CRUD.
@@ -49,7 +48,7 @@ public class LibroService {
         return listaLibros;
     }
 	
-	/*//Obtener libros con restTemplate
+	//Obtener libros con restTemplate
 	public List<Libro> obtenerTodosLosLibrosRs(){
 		try {
 			ResponseEntity<Libro[]> obtenerTodosLosLibros =
@@ -61,16 +60,17 @@ public class LibroService {
 		    System.out.println("obtenerTodosLosLibrosRs -> Codigo de respuesta: " + e.getStatusCode());
 		    return null;
 		}
-	}*/
+	}
 	
 	
 	//Create
-	public List<Libro> altaLibro(Libro l) {
+	public Libro altaLibro(Libro l) {
 		listaLibros.add(l);
-		return listaLibros;
+		return l;
+		
 	}
 	
-	/*//Create con restTemplate
+	//Create con restTemplate
 	public Libro altaLibroRs(Libro libro){
 		try {
 			//Para hacer un post de una entidad usamos el metodo postForEntity
@@ -79,14 +79,13 @@ public class LibroService {
 			//El tercer parametro el objeto que esperamos que nos envie el servidor
 			ResponseEntity<Libro> re = restTemplate.postForEntity(URL, libro, Libro.class);
 			System.out.println("altaLibroRs -> Codigo de respuesta " + re.getStatusCode());
-			System.out.println("Libro dado de alta correctamente!");
 			return re.getBody();
 		} catch (HttpClientErrorException e) {//Errores 4XX
 			System.out.println("altaLibroRs -> El libro NO se ha dado de alta, id: " + libro);
 		    System.out.println("altaLibroRs -> Codigo de respuesta: " + e.getStatusCode());
 		    return null;
 		}
-	}*/
+	}
 	
 	
 	//Read
@@ -99,26 +98,26 @@ public class LibroService {
 	        return null; // No se encontró ninguna película con ese ID
 	    }
 	
-	/*//Read con restTemplate
+	//Read con restTemplate
 	public Libro obtenerLibroPorIdRs(int id){
 		try {
 			//Como el servicio trabaja con objetos ResponseEntity, nosotros 
 			//tambien podemos hacerlo en el cliente
 			//Ej http://localhost:8080/personas/1 GET
 			ResponseEntity<Libro> re = restTemplate.getForEntity(URL + id, Libro.class);
-			HttpStatusCode hs= re.getStatusCode();
+			HttpStatusCode hs = re.getStatusCode();
 			if(hs == HttpStatus.OK) {	
 				return re.getBody();
 			}else {
-				System.out.println("obtenerLibroPorId -> Respuesta no contemplada");
+				System.out.println("obtenerLibroPorIdRs -> Respuesta no contemplada");
 				return null;
 			}
 		}catch (HttpClientErrorException e) {//Errores 4XX
-			System.out.println("obtenerLibroPorId -> La persona NO se ha encontrado, id: " + id);
-		    System.out.println("obtenerLibroPorId -> Codigo de respuesta: " + e.getStatusCode());
+			System.out.println("obtenerLibroPorIdRs -> El libro NO se ha encontrado, id: " + id);
+		    System.out.println("obtenerLibroPorIdRs -> Codigo de respuesta: " + e.getStatusCode());
 		    return null;
 		}
-	}*/
+	}
 	
 	
 	//Update
@@ -136,7 +135,7 @@ public class LibroService {
 		
 	}
 	
-	/*//Update con restTemplate
+	//Update con restTemplate
 	public boolean editarLibroRs(Libro libro){
 		try {
 			//El metodo put de Spring no devuelve nada
@@ -149,7 +148,7 @@ public class LibroService {
 		    System.out.println("editarLibroRs -> Codigo de respuesta: " + e.getStatusCode());
 		    return false;
 		}
-	}*/
+	}
 	
 	
 	//Delete
@@ -163,7 +162,7 @@ public class LibroService {
         return null; // No se encontró ninguna película con ese ID
     }
 	
-	/*//Delete con restTemplate
+	//Delete con restTemplate
 	public boolean eliminarLibroPorIdRs(int id){
 		try {
 			//El metodo delete tampoco devuelve nada, por lo que si no 
@@ -177,7 +176,7 @@ public class LibroService {
 		    System.out.println("eliminarLibroPorIdRs -> Codigo de respuesta: " + e.getStatusCode());
 		    return false;
 		}
-	}*/
+	}
 	
 	
 	

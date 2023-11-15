@@ -104,7 +104,7 @@ public class LibroService {
 			//Como el servicio trabaja con objetos ResponseEntity, nosotros 
 			//tambien podemos hacerlo en el cliente
 			//Ej http://localhost:8080/personas/1 GET
-			ResponseEntity<Libro> re = restTemplate.getForEntity(URL + id, Libro.class);
+			ResponseEntity<Libro> re = restTemplate.getForEntity(URL + "/"+ id, Libro.class);
 			HttpStatusCode hs = re.getStatusCode();
 			if(hs == HttpStatus.OK) {	
 				return re.getBody();
@@ -141,7 +141,7 @@ public class LibroService {
 			//El metodo put de Spring no devuelve nada
 			//si no da error se ha dado de alta y si no daria una 
 			//excepcion
-			restTemplate.put(URL + libro.getId(), libro, Libro.class);
+			restTemplate.put(URL + "/" + libro.getId(), libro, Libro.class);
 			return true;
 		} catch (HttpClientErrorException e) {
 			System.out.println("editarLibroRs -> El libro no se ha modificado, id: " + libro.getId());
@@ -167,8 +167,8 @@ public class LibroService {
 		try {
 			//El metodo delete tampoco devuelve nada, por lo que si no 
 			//ha podido borrar el id, daría un excepcion
-			//Ej http://localhost:8080/personas/1 DELETE
-			restTemplate.delete(URL + id);
+			//Ej http://localhost:8080/libros/1 DELETE
+			restTemplate.delete(URL + "/" + id);
 			System.out.println("Libro borrado correctamente!");
 			return true;
 		} catch (HttpClientErrorException e) {

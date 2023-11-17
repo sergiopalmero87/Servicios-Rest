@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -105,7 +104,7 @@ public class LibroService {
 			//tambien podemos hacerlo en el cliente
 			//Ej http://localhost:8080/personas/1 GET
 			ResponseEntity<Libro> re = restTemplate.getForEntity(URL + "/"+ id, Libro.class);
-			HttpStatusCode hs = re.getStatusCode();
+			HttpStatus hs = re.getStatusCode();
 			if(hs == HttpStatus.OK) {	
 				return re.getBody();
 			}else {

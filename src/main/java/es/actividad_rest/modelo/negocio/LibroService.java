@@ -64,7 +64,7 @@ public class LibroService {
 	
 	//Create
 	public Libro altaLibro(Libro l) {
-		listaLibros.add(l);
+		listaLibros.add(l);	
 		return l;
 		
 	}

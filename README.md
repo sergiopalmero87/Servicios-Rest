@@ -1,7 +1,19 @@
-# Servicios-Rest
+## 🚀 REST API - Spring Boot
 
-# Objetivos
-Aprender a usar la arquitectura REST tanto en cliente como en servidor.
+API REST desarrollada con Spring Boot.
+
+### Funcionalidades
+- CRUD de recursos
+- Endpoints REST
+- Manejo de peticiones HTTP
+
+### Tecnologías
+- Java
+- Spring Boot
+- REST API
+
+### Objetivo
+Proyecto enfocado en comprender el diseño y desarrollo de APIs REST reales.
 
 # Pautas de elaboración
 REQUERIMIENTO 1
